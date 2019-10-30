@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>GeoDa.app</title>
+<style>
+body {
+/*
+  background: url({{url_prefix}}/../media/img/bg.jpg) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  */
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+#login {
+  width: 80%;
+  height: 500px;
+  position: absolute;
+  top:10;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+.logintable, logintable TD, logintable TH{
+  margin-left:10px;
+  font-family: Century Gothic;
+  font-size: 10pt;
+  color: #666;
+}
+.logintable input{
+  padding: 4px;
+  border: solid 1px #dcdcdc;
+  transition: box-shadow 0.3s, border 0.3s;
+}
+.signuptable input{
+  padding: 10px;
+  border: solid 1px #dcdcdc;
+  transition: box-shadow 0.3s, border 0.3s;
+  color: #333;
+}
+.signuptable input:focus,
+.signuptable input.focus {
+  border: solid 1px #707070;
+  box-shadow: 0 0 5px 1px #969696;
+}
+.content {
+  width: 90%;
+  /*border: 1px red solid;*/
+  margin:0 auto;
+  padding-top: 140px;
+}
+.brand {
+  text-align: left;
+}
+.geoda_title {
+  text-align: left;
+  -webkit-font-smoothing: antialiased;
+  color: rgb(255, 255, 255);
+  cursor: auto;
+  display: block;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 40px;
+  font-weight: bold;
+  height: auto;
+  line-height: 20px;
+  text-decoration: none;
+  text-shadow: rgba(0, 0, 0, 0.298039) 0px 8px 8px;
+  width: auto;
+  margin-top: 15px;
+}
+.geoda_desc {
+  text-align: left;
+  -webkit-font-smoothing: antialiased;
+  color: rgb(255, 255, 255);
+  display: block;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 28px;
+  font-weight: normal;
+  height: 66px;
+  line-height: 33.6px;
+  margin-bottom: 20px;
+  margin-left: 30px;
+  margin-right: 0px;
+  margin-top: 25px;
+  padding-left: 49px;
+  text-rendering: optimizeLegibility;
+  text-shadow: rgba(0, 0, 0, 0.298039) 0px 1px 0px;
+  width: auto;
+  }
+/* CSSTerm.com Simple CSS menu */
+
+.menu_simple ul {
+    margin-left: 80px;
+    margin-top: 80px;
+    padding: 0;
+    width:405px;
+    list-style-type: none;
+}
+
+.menu_simple ul li a {
+  -webkit-font-smoothing: antialiased;
+  -webkit-user-select: none;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  color: rgb(255, 255, 255);
+  text-align: left;
+  text-decoration: none;
+  text-shadow: rgba(0, 0, 0, 0.298039) 0px 1px 0px;
+  text-shadow: rgba(0, 0, 0, 0.298039) 0px 4px 4px;
+
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 24px;
+  height: 14px;
+  line-height: 14px;
+  text-decoration: none;
+  color: white;
+  padding: 10.5px 11px;
+  display:block;
+}
+
+.menu_simple ul li a:hover {
+    text-decoration: underline;
+}
+
+.menu_simple ul li a:hover, .menu_simple ul li .current {
+    color: white;
+}
+
+.btn-block {
+  -webkit-font-smoothing: antialiased;
+  background-repeat: repeat-x;
+  border-radius: 2px;
+  border-style: solid;
+  border-width: 1px;
+  border-image-outset: 0px;
+  border-image-repeat: stretch;
+  border-image-slice: 100%;
+  border-image-source: none;
+  border-image-width: 1;
+  box-shadow: none;
+  box-sizing: border-box;
+  color: rgb(255, 255, 255);
+  cursor: pointer;
+  display: block;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  height: 36px;
+  line-height: 20px;
+  margin-bottom: 17px;
+  margin-top: 12px;
+  padding-bottom: 7px;
+  padding-left: 14px;
+  padding-right: 14px;
+  padding-top: 7px;
+  position: relative;
+  text-align: left;
+  text-decoration: none;
+  text-shadow: none;
+  vertical-align: middle;
+  width: 259px;
+}
+
+#facebook_login_button {
+  background-color: rgb(59, 89, 152);
+  background-image: linear-gradient(rgb(59, 89, 152), rgb(59, 89, 152));
+  border-color: rgb(59, 89, 152);
+}
+#google_login_button {
+  background-color: rgb(246, 109, 105);
+  background-image: linear-gradient(rgb(246, 109, 105), rgb(246, 109, 105));
+  border-color: rgb(246, 109, 105);
+}
+#twitter_login_button {
+  background-color: rgb(75, 180, 221);
+  background-image: linear-gradient(rgb(75, 180, 221), rgb(75, 180, 221));
+  border-color: rgb(75, 180, 221);
+}
+#tumblr_login_button {
+  background-color: rgb(54, 69, 94);
+  background-image: linear-gradient(rgb(54, 69, 94), rgb(54, 69, 94));
+  border-color: rgb(54, 69, 94);
+}
+#weibo_login_button {
+  background-color: rgb(251, 145, 0);
+  background-image: linear-gradient(rgb(251, 145, 0), rgb(251, 145, 0));
+  border-color: rgb(251, 145, 0);
+}
+
+.login-button-icon {
+  vertical-align:middle;
+  margin-right:10px;
+}
+#wrap {
+  position:absolute;
+  background: url(../../media/img/bg0.jpg) no-repeat center center fixed;
+  z-index:-1;
+  top:0;
+  left:0;
+  background-color:black
+  width: 100%;
+  width: -moz-calc(100%); /* Firefox */
+  width: -webkit-calc(100%); /* Chrome, Safari */
+  width: calc(100%); /* IE9+ and future browsers */
+  height: 100%;
+}
+#wrap img.bgfade{
+    position:absolute;
+    top:0;
+    left:0;
+    display:none;
+    z-index:-1
+    width: auto;
+    height: auto;
+    max-width:  -webkit-calc(100%); /* Chrome, Safari */
+    max-height:  -webkit-calc(100%); /* Chrome, Safari */
+}
+.logo-panel {
+  float:left;
+  width:400px;
+  margin-top:20px;
+  max-width:400px;
+  display: inline-block;
+}
+@media (max-width: 1023px)  {
+  .logo-panel {
+    float: none;
+    width:400px;
+    margin-top:20px;
+    max-width:400px;
+  }
+  .menu_simple {
+    display: none;
+  }
+  .content {
+    width: 90%;
+    /*border: 1px red solid;*/
+    margin:0 auto;
+    text-align: center;
+    padding-top: 10px;
+  }
+}
+@media only screen
+and (min-device-width : 375px)
+and (max-device-width : 667px)  {
+  .geoda_desc {
+    display: none;
+  }
+  .content {
+    width: 90%;
+    /*border: 1px red solid;*/
+    margin:0 auto;
+    text-align: center;
+    padding-top: 0px;
+  }
+}
+
+.inlineinput div {
+    display: inline;
+}
+
+</style>
+
+<link rel="stylesheet" href="../../media/css/header.css" />
+<link rel="stylesheet" href="../../media/css/tabs.css" />
+<link rel="stylesheet" href="../../media/css/{{theme_jquery}}/jquery-ui-1.10.0.custom.css">
+
+<script src="../../media/js/lib/jquery.min.js"></script>
+<script src="../../media/js/utils.js"></script>
+<script src="../../media/js/login.js"></script>
+</head>
+
+<body>
+<div id="wrap">
+  <img class="bgfade" src="../../media/img/bg0.jpg">
+  <img class="bgfade" src="../../media/img/bg1.jpg">
+  <img class="bgfade" src="../../media/img/bg2.jpg">
+  <img class="bgfade" src="../../media/img/bg3.jpg">
+</div>
+
+<div class="content">
+  <div class="logo-panel">
+    <img id="logo" style="float:left;text-align:top;margin-right:10px;" src="../../media/img/geoda-logo.png">
+
+    <div class="geoda_title">
+      GeoDa•Web
+      <h2 class="geoda_desc">The cloud-based GeoDa <br>for spatial data analysis.</h2>
+    </div>
+
+    <div class="menu_simple">
+      <ul>
+        <li><a href="#">Gallery</a></li>
+        <li><a href="#">Tutorial</a></li>
+        <li><a href="#">APIs</a></li>
+        <li><a href="#">Help</a></li>
+        <li><a href="#">About</a></li>
+        <br><br><br><br>
+        <li><a href="#" style="font-size: 18px;">Copyright &copy; 2017 spatial.uchicago.edu</a></li>
+        <li>
+          <a href="#"><img src="http://spatial.uchicago.edu/sites/spacial-data.uchicago.edu/files/CSDS_logo_white_2_web.png" /></a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="login-panel">
+    <div class="tabs" style="padding-left: 20px;width:400px;">
+      <ul class="tab-links">
+        <li class="active"><a href="#tab1">Login to GeoDa-Web</a></li>
+        <li><a href="#tab2">No account? Sign Up</a></li>
+      </ul>
+
+      <div class="tab-content" style="width:350px; height:400px;">
+        <div id="tab1" class="tab active" style="text-align: left;">
+          <p>
+
+            <form id="form-login" method="post" role="form">{% csrf_token %}
+            <div>
+              <span class="inlineinput">
+                <input type="text"  name="lemail" placeholder='Enter email'  style='display: inline; width: 120px;'></input>
+              </span>
+              <span class="inlineinput">
+                <input type="password" name="lpassword" placeholder="Enter password"  style='display: inline; width: 120px;'>
+              </span>
+              <button type="submit" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only " id="btn_login">Submit</button>
+            </div>
+
+            &nbsp;&nbsp;&nbsp;<font color="red" style="font-size:10px" face="Century Gothic">{{error_msg}}</font>
+
+            {% if error_msg != "" %}<br><br>
+            &nbsp;&nbsp;&nbsp;<font color="blue" style="font-size:10px" face="Century Gothic">Forget my password?</font>
+            {% endif %}
+            </form>
+          </p>
+
+          <p style="border-top: 1px solid #ccc;text-align:center;"></p>
+
+          <p style="margin-left:30px;margin-top:30px;">
+            <a id="facebook_login_button" class="btn-block" href="{% url 'social:begin' 'facebook' %}?next={{ request.path }}">
+            <img class="login-button-icon" src="../../media/img/button-icon-facebook.png"> Log in with Facebook
+            </a>
+            <a id="google_login_button" class="btn-block" href="{% url 'social:begin' 'google-oauth2' %}?next={{ request.path }}">
+            <img class="login-button-icon" src="../../media/img/button-icon-google.png"> Log in with Google
+            </a>
+            <a id="twitter_login_button" class="btn-block" href="{% url 'social:begin' 'twitter' %}?next={{ request.path }}">
+            <img class="login-button-icon" src="../../media/img/button-icon-twitter.png"> Log in with Twitter
+            </a>
+            <a id="tumblr_login_button" class="btn-block" href="{% url 'social:begin' 'tumblr' %}?next={{ request.path }}">
+            <img class="login-button-icon" src="../../media/img/button-icon-tumblr.png"> Log in with Tumblr
+            </a>
+            <a id="weibo_login_button" class="btn-block" href="{% url 'social:begin' 'weibo' %}?next={{ request.path }}">
+            <img class="login-button-icon" src="../../media/img/button-icon-weibo.png"> Log in with Weibo
+            </a>
+          </p>
+          <br>
+        </div>
+
+        <div id="tab2" class="tab" style="text-align: left;">
+          <br/><br/><br/>
+          <form id="form-signup" method="post" action="../signup/">{% csrf_token %}
+            <table class="signuptable" width="400px">
+              <tr>
+                <td width=320>
+                  <input type="text" name="first_name" value='First Name' style="width:135px"></input>
+                  <input type="text" name="last_name" value='Last Name'></input>
+                </td>
+                <td><p id="chk_name_msg" style="margin-left: -180px; font-size:10px;font-family: Century Gothic;color: red; "></p></td>
+              </tr>
+              <tr>
+                <td>
+                  <input style="width:290px" type="text" name="email" value='Email'></input>
+                  <img id="img-id-chk" src="../../media/img/checkmark.png">
+                  <img id="img-id-nochk" src="../../media/img/uncheckmark.gif">
+                  <img id="img-id-spin" src="../../media/img/loading_small.gif">
+                </td>
+                <td><p id="chk_email_msg" style="margin-left: -180px; font-size:10px;font-family: Century Gothic;color: red; "></p></td>
+              </tr>
+              <tr>
+                <td>
+                  <input style="width:290px" type="text" name="reemail" value='Re-enter Email'></input>
+                </td>
+                <td><p id="chk_reemail_msg" style="margin-left: -180px;font-size:10px;font-family: Century Gothic;color: red; "></p></td>
+              </tr>
+              <tr>
+                <td>
+                  <input style="width:290px" type="text" name="password" value='Enter Password'> </input>
+                </td>
+                <td><p id="chk_pwd_msg" style="margin-left: -180px; font-size:10px;font-family: Century Gothic;color: red; "></p></td>
+              </tr>
+            </table>
+            <br/>
+            &nbsp;&nbsp;<img id="account" src="../../media/img/user.png" align=""><font style="font-size:10px" face="Century Gothic"> By clicking Sign Up, you agree to our Terms and Policy.</font>
+            <p class="text-align:right;">
+            <button id="btn_signup" type="submit" class="ui-state-default button-text-only" style="width:100">Sign Up</button>
+            </p>
+          </form>
+        </div>
+
+      </div>
+    </div> <!-- end login-panel div-->
+</div> <!-- end content div-->
+<script>
+$(document).ready(function() {
+
+  var images = ['bg0.jpg', 'bg1.jpg', 'bg2.jpg'];
+  var i = 0;
+
+  setInterval(function(){
+      $('#wrap').css('background-image', function() {
+          if (i >= images.length) {
+              i=0;
+          }
+          return 'url(../../media/img/' + images[i++] + ')';
+      });
+  }, 10000);
+
+
+
+  $('.tabs .tab-links a').on('click', function(e)  {
+    var currentAttrValue = $(this).attr('href');
+
+    // Show/Hide Tabs
+    $('.tabs ' + currentAttrValue).fadeIn(400).siblings().hide();
+
+    // Change/remove current tab to active
+    $(this).parent('li').addClass('active').siblings().removeClass('active');
+
+    e.preventDefault();
+  });
+
+
+});
+
+$("#img-id-chk, #img-id-nochk, #img-id-spin").hide();
+
+$('#btn_login').click( function() {
+  $.post("./login/", $("form-login").serialize())
+  .done(function(data) {
+    console.log(data);
+    location.reload();
+  })
+  .fail( function() {
+    console.log("error");
+  });
+});
+
+$('#btn_signup').submit( function(event) {
+  if ( $('#chk_email_mmsg').text() != "" || $('#chk_reemail_msg').text() != ""|| $('.ignuptable input[name=password]').val() == "" ) {
+    return;
+  }
+  event.preventDefault();
+});
+
+function checkDupEmail(email) {
+  //$('#img-id-spin').show();
+  $.get("./dup_email/", {'email': email})
+  .done( function(data) {
+   // $('#img-id-spin').hide();
+    if (data == 1) {
+      //$('#img-id-nochk').show();
+      $('#chk_email_msg').text("Email address already exists.");
+    } else {
+      $('#chk_email_msg').text("");
+      $('#img-id-chk').show();
+    }
+  })
+  .always(function(){
+  });
+}
+
+function setupInput(name, placeholder) {
+  $(".signuptable input[name="+name+"]").focus(function() {
+    if ($(this).val() == placeholder) {
+      $(this).val('');
+    }
+  }).blur(function(){
+    if ($(this).val() == '') {
+      $(this).val(placeholder);
+    } else {
+      if (name == "email") {
+        if (!isValidEmailAddress( $(this).val()) ){
+          $('#chk_email_msg').text("Email address is not valid.");
+        } else {
+          checkDupEmail( $(this).val() );
+        }
+      } else if (name == "reemail") {
+        if ( $(this).val() != $('.signuptable input[name=email]').val() ) {
+          $('#chk_reemail_msg').text("Re-entered Email address does not match.");
+        }
+      } else if (name == "password") {
+        if ( $(this).val() == "" ) {
+          $('#chk_pwd_msg').text("Password should not be empty.");
+        }
+      } else if (name == "first_name") {
+        if ( $(this).val() == "First Name" ) {
+          $('#chk_name_msg').text("First Name should not be empty.");
+        }
+      } else if (name == "last_name") {
+        if ( $(this).val() == "Last Name" ) {
+          $('#chk_name_msg').text("Last Name should not be empty.");
+        }
+      }
+    }
+  });
+}
+setupInput("first_name", "First Name");
+setupInput("last_name", "Last Name");
+setupInput("email", "Email");
+setupInput("reemail", "Re-enter Email");
+
+$('.signuptable input[name=password]').focus(function() {
+  if ($(this).val() == "Enter Password") {
+    $(this).attr("type", "password");
+    $(this).val('');
+  }
+});
+$('.signuptable input[name=password]').blur(function() {
+  if ($(this).val() == '') {
+    $(this).attr("type", "text");
+    $(this).val("Enter Password");
+  }
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,367 @@
+
+// Author: xunli at asu.edu
+define(['jquery', 'geoda/io/shapefile', 'geoda/io/shapefile_map','geoda/io/geojson','geoda/io/geojson_map','geoda/viz/map_canvas'],
+function($, ShpReader, ShapeFileMap, GeoJson, GeoJsonMap, MapCanvas) {
+
+var Manager = (function(window){
+
+  var instance;
+
+  function init() {
+    // singleton
+
+    // private
+    var container = $("#map-container");
+
+    var width = container.width();
+    var height = container.height();
+
+    var numMaps = 0;
+    var mapCanvasList = [];
+    var mapOrder= [];
+
+    var layerColors = ['#006400','#FFCC33','#CC6699','#95CAE4','#993333','#279B61'];
+    var uuid = null;
+
+    var currentMapName;
+
+    var hlcanvas = $('.hl-canvas');
+
+    var resizeTimer;
+
+    function OnResize( evt ) {
+      if (numMaps) {
+        $('canvas, .down-arrow').hide();
+      }
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(function(){
+        console.log('resize');
+        $('canvas').show();
+        for (var i=0; i<numMaps; i++)  {
+          mapCanvasList[i].update();
+        }
+      }, 250);
+    }
+    function OnKeyDown( evt ) {
+      if ( evt.keyCode = 77 ) {
+        //hlcanvas[0].style.pointerEvents= 'none';
+      }
+    }
+
+    function OnKeyUp( evt ) {
+      if ( evt.keyCode = 77 ) {
+        //hlcanvas[0].style.pointerEvents= 'auto';
+      }
+    }
+
+    function ShowCartoDBMap(carto_uid, carto_key, table_name, geo_type) {
+      var css = "";
+      if (geo_type == "Point") {
+        css = '#layer {marker-fill: #FF6600; marker-opacity: 1; marker-width: 6; marker-line-color: white; marker-line-width: 1; marker-line-opacity: 0.9; marker-placement: point; marker-type: ellipse; marker-allow-overlap: true;}';
+      } else if (geo_type == "Line") {
+        css = '#layer {line-width: 2; line-opacity: 0.9; line-color: #006400; }';
+      } else if (geo_type == "Polygon") {
+        css = "#layer {polygon-fill: #006400; polygon-opacity: 0.9; line-color: #CCCCCC; }";
+      }
+      //show cartodb layer and downloading iconp
+      SetupLeafletMap();
+      lmap.setView(new L.LatLng(43, -98), 1);
+      if (carto_layer) {
+        lmap.removeLayer(carto_layer);
+      }
+      carto_layer = cartodb.createLayer(lmap,
+        {
+          user_name: carto_uid,
+          type: 'cartodb',
+          sublayers:[{
+            sql:"SELECT * FROM " + table_name,
+            cartocss: css
+          }],
+        },
+        {
+          https: true,
+        }
+      )
+      .addTo(lmap)
+      .on('done', function(layer_) {
+        var sql = new cartodb.SQL({user: carto_uid});
+        sql.getBounds("SELECT * FROM " + table_name).done(function(bounds){
+          lmap.fitBounds(bounds);
+        });
+      });
+    }
+
+    function CleanMaps() {
+      for (var i=0; i<numMaps; i++) {
+        mapCanvasList[i].clean();
+      }
+    }
+
+    function PanMaps(offsetX, offsetY) {
+      for (var i=0; i<numMaps; i++) {
+        mapCanvasList[i].move(offsetX, offsetY);
+      }
+    }
+
+    function UpdateMaps(params) {
+      for (var i=0; i<numMaps; i++) {
+        mapCanvasList[i].update(params, true);
+      }
+    }
+
+    var basemap;
+
+    require(['ui/basemap'], function(BaseMap){
+      basemap = BaseMap.getInstance();
+      $('#map').css("opacity",0);
+    });
+
+    var Lmove_start, Lmove, Lmove_end, gOffsetX, gOffsetY;
+
+    function SetupBasemapEvent() {
+      var lmap = basemap.GetLmap();
+
+      lmap.on('zoomstart', function() {
+        CleanMaps();
+      });
+      lmap.on('zoomend', function() {
+        // already taken care by moveend
+      });
+      lmap.on('movestart', function(e) {
+        Lmove_start = e.target._getTopLeftPoint();
+        CleanMaps();
+      });
+      lmap.on('move', function(e) {
+        Lmove = e.target._getTopLeftPoint();
+        if (Lmove_start == undefined) {
+          // resize window
+          Lmove_start = e.target.getPixelOrigin();
+          CleanMaps();
+          return;
+        }
+        var offsetX = Lmove.x - Lmove_start.x,
+            offsetY = Lmove.y - Lmove_start.y;
+        if (Math.abs(offsetX) > 0 && Math.abs(offsetY) > 0) {
+          PanMaps(-offsetX, -offsetY);
+        }
+      });
+      lmap.on('moveend', function(e) {
+        Lmove_end = e.target._getTopLeftPoint();
+        var offsetX = Lmove_end.x - Lmove_start.x,
+            offsetY = Lmove_end.y - Lmove_start.y;
+        if (Math.abs(offsetX) > 0 || Math.abs(offsetY) > 0) {
+          if (gOffsetX != offsetX || gOffsetY != offsetY) {
+            gOffsetX = offsetX;
+            gOffsetY = offsetY;
+            UpdateMaps();
+          }
+        }
+      });
+    }
+
+    //create basemap
+    function OnAddMap(map) {
+      // show leaflet map
+      $('#map').css("opacity",1);
+      // create a HTML5 canvas object for this map
+      var canvas = $('<canvas/>', {'id':numMaps}).attr('class','paint-canvas');
+      container.append(canvas);
+      var  params = {};
+      // assign default fill color
+      if (params['fill_color'] === undefined) {
+        params['fill_color'] = layerColors[numMaps % 6];
+      }
+      // create canvas-map object
+      var mapCanvas = new MapCanvas(map, canvas, hlcanvas, params);
+      for (var i=0; i<mapCanvasList.length; i++) {
+        mapCanvasList[i].updateExtent(map);
+      }
+      // managed by mapCanvasList
+      mapCanvasList.push(mapCanvas);
+      mapOrder.push(numMaps);
+
+      // hookup map event to this "top" canvas
+      SetupBasemapEvent();
+
+      //numMaps += 1;
+      return numMaps++;
+    }
+
+    function GetMapCanvasByName(name) {
+      for (var i=0; i<mapCanvasList.length; i++) {
+        if (mapCanvasList[i].map.name === name)
+          return mapCanvasList[i];
+      }
+      return undefined;
+    }
+
+    function GetMapCanvasByUuid(uuid) {
+      for (var i=0; i<mapCanvasList.length; i++) {
+        if (mapCanvasList[i].map.uuid === uuid)
+          return mapCanvasList[i];
+      }
+      return undefined;
+    }
+
+    function OnBrushing(e) {
+      console.log("map OnBrushing", e.detail.uuid);
+      var uuid = e.detail.uuid;
+      var hl_ids = JSON.parse(localStorage.getItem('HL_IDS')),
+          hl_ext = JSON.parse(localStorage.getItem('HL_MAP'));
+      for ( var uuid in hl_ids ) {
+        var map = GetMapCanvasByUuid(uuid);
+        if (map) {
+          var ids = hl_ids[uuid];
+          if ( hl_ext && uuid in hl_ext ) {
+            map.highlightExt(ids, hl_ext[uuid]);
+          } else if ( hl_ids && uuid in hl_ids ) {
+            var context = undefined;
+            var nolinking = true;
+            map.highlight(hl_ids[uuid], context, nolinking);
+          }
+        }
+      }
+    }
+
+    window.addEventListener('keydown', OnKeyDown, true);
+    window.addEventListener('keyup', OnKeyUp, true);
+    window.addEventListener('resize', OnResize, true);
+    window.addEventListener('brushing', OnBrushing, true); // false for bubble
+    window.addEventListener('storage', OnBrushing, true);
+
+    return {
+      // public
+
+      AddMap : function(data, callback) {
+        if (data.file_type === 'shp') {
+
+          var shp = data.file_content.shp,
+              prj = data.file_content.prj;
+          var reader = new FileReader();
+          reader.onload = function(e) {
+            // just in case basemap is not ready
+            require(['ui/basemap'], function(BaseMap){
+              basemap = BaseMap.getInstance();
+
+              var shpReader = new ShpReader(reader.result);
+              var map = new ShapeFileMap(data.file_name, shpReader, basemap.GetL(), basemap.GetLmap(), prj);
+              map.uuid = data.file_name;
+              OnAddMap(map);
+              if (callback) callback(map);
+            });
+          };
+          reader.readAsArrayBuffer(shp);
+         
+        } else if (data.file_type === 'geojson' || data.file_type === 'json') {
+          var shp = data.file_content;
+            require(['ui/basemap'], function(BaseMap){
+              basemap = BaseMap.getInstance();
+              var json = new GeoJson(data.file_name, shp);
+              var map = new GeoJsonMap(json, basemap.GetL(), basemap.GetLmap());
+              map.uuid = data.file_name;
+              OnAddMap(map);
+              if (callback) callback(map);
+            });
+            
+        } else {
+          console.log("unsupported file format:", data);
+        }
+      },
+
+      AddExistingMap : function(map, callback) {
+        OnAddMap(map);
+        if (callback) callback(map);
+      },
+
+      UpdateExtent : function(map) {
+        for (var i=0; i<mapCanvasList.length; i++) {
+          mapCanvasList[i].updateExtent(map);
+        }
+      },
+
+      GetNumMaps : function() {
+        return numMaps;
+      },
+
+      GetMapCanvas : function(idx) {
+        if (idx === undefined) idx = numMaps-1;
+        return mapCanvasList[mapOrder[idx]];
+      },
+
+      GetCanvasByMap : function(map) {
+        for (var i=0; i<mapCanvasList.length; i++) {
+          var mapcanvas = mapCanvasList[i];
+
+          if (map.name === mapcanvas.map.name)
+            return mapcanvas;
+        }
+        return undefined;
+      },
+
+
+      GetMap : function(idx) {
+        return  this.GetMapCanvas(idx).map;
+      },
+
+      GetMapByName : function(name) {
+        for (var i=0; i<mapCanvasList.length; i++) {
+          var mapcanvas = mapCanvasList[i],
+              map = mapcanvas.map;
+          if (map.name === name)
+            return map;
+        }
+        return undefined;
+      },
+
+      GetMapCanvasByUuid: function(uuid) {
+        for (var i=0; i<mapCanvasList.length; i++) {
+          var mapcanvas = mapCanvasList[i],
+              map = mapcanvas.map;
+          if (map.uuid === uuid)
+            return mapcanvas;
+        }
+        return undefined;
+      },
+
+      GetOrigIdx : function(idx)  {
+        return mapOrder[idx];
+      },
+
+      Reorder : function(newOrder) {
+        // mapOrder [2,1,3,4]
+        var n = numMaps;
+        var newExtent = newOrder[n-1]  != mapOrder[n-1];
+        mapOrder = newOrder;
+
+        // update orders of canvas by given new order
+        for (var i=0; i < n; i++) {
+          $('canvas[id=' + newOrder[i] + ']').appendTo(container);
+        }
+
+        if (newExtent) {
+          var topLayerIdx = newOrder[n-1];
+          var mapcanvas = mapCanvasList[topLayerIdx];
+          var map = mapcanvas.map;
+          var extent = map.setExtent();
+
+          map.setLmapExtent(extent);
+        }
+      },
+
+    };
+  };
+
+  return {
+    getInstance : function() {
+      if (!instance) {
+        instance = init();
+      }
+      return instance;
+    },
+  };
+
+})(this);
+
+return Manager;
+
+});
