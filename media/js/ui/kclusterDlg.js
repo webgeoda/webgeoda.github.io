@@ -152,7 +152,8 @@ var KClusterDlg = (function($){
             var w_uid = w_obj.get_uid(); 
 
             prg_bar.show();
-            var clusters = geoda.skater(map_uuid, w_uid, k, fields, bound_var, min_bound);
+            var method = "firstorder-singlelinkage";
+            var clusters = geoda.redcap(map_uuid, w_uid, k, fields, bound_var, min_bound, method);
             ProcessClusterMap(fields, clusters);
             prg_bar.hide();
             that.dialog("close");
