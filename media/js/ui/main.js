@@ -27,7 +27,7 @@ function(_, $,
          MapManager) {
 
   // hide all divs
-  $('#w-dist-loading, #img-id-chk, #img-id-spin, #img-id-nochk, .dlg-loading, #progress_bar_openfile, #progress_bar_cartodb,#progress_bar_road, #progress_bar_spacetime, #btnMultiLayer, #progress_bar_lisa, #progress_bar_localg, #progress_bar_kcluster, #tool-menu-arrow, #dialog-arrow, #userInfo, #mapInfo, #prgInfo, #legend').hide();
+  $('#w-dist-loading, #img-id-chk, #img-id-spin, #img-id-nochk, .dlg-loading, #progress_bar_openfile, #progress_bar_cartodb,#progress_bar_road, #progress_bar_spacetime, #btnMultiLayer, #progress_bar_lisa, #progress_bar_localg, #progress_bar_kcluster, #tool-menu-arrow, #dialog-arrow, #userInfo, #mapInfo, #prgInfo').hide();
 
   // define functions for jquery
   $.download = function(url, data, method) {

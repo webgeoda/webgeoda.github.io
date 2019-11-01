@@ -2,14 +2,14 @@
 // Author: xunli at asu.edu
 define(['jquery', './msgbox','./utils','./mapManager','./cartoProxy','colorbrewer'], function($, MsgBox, Utils, MapManager, CartoProxy) {
 
-var LocalGDlg = (function($){
+var LocalGearyDlg = (function($){
   var instance;
 
   function init() {
     // singleton
 
     // private methods/vars
-    var sel_lisa_var = $('#sel-localg-var'),
+    var sel_lisa_var = $('#sel-localgeary-var'),
     prg_bar = $('#progress_bar_lisa');
 
     function ProcessLisaMap(col_name, lisa) {
@@ -17,7 +17,7 @@ var LocalGDlg = (function($){
           map = mapCanvas.map,
           field_name = "lisa";
 
-	    var pval = $('#localg-pval-sels').val();
+	    var pval = $('#localgeary-pval-sels').val();
       var colors = [];
       var color_vec = lisa.colors();
       for (let i=0; i< color_vec.size(); ++i) {
@@ -45,7 +45,7 @@ var LocalGDlg = (function($){
       mapCanvas.updateColor(colorTheme, field_name, [0,1,2,3,4,5,6], colors, txts);
 
       // update Tree item
-      var type = " (" + col_name + ", Local Getis-Ord)",
+      var type = " (" + col_name + ", Local Geary)",
           curTreeItem = $($('#sortable-layers li')[0]);
           newLayerName = $('#btnMultiLayer span').text() + type;
 
@@ -53,14 +53,14 @@ var LocalGDlg = (function($){
 
       // add a field with LISA values
       require(['ui/uiManager'], function(UIManager){
-        map.fields['localg_c'] = 'integer';
-        map.fields['localg_p'] = 'double';
+        map.fields['geary_c'] = 'integer';
+        map.fields['geary_p'] = 'double';
         UIManager.getInstance().UpdateFieldNames(map.fields);
         mapCanvas.update();
       });
     }
 
-    $("#dlg-localg-map").dialog({
+    $("#dlg-localgeary-map").dialog({
       dialogClass: "dialogWithDropShadow",
       width: 560,
       height: 480,
@@ -69,14 +69,14 @@ var LocalGDlg = (function($){
       resizable:  false,
       draggable: false,
       open: function(event, ui) {
-        $('#sel-w-files').appendTo('#localg-weights-plugin');
+        $('#sel-w-files').appendTo('#localgeary-weights-plugin');
       },
       beforeClose: function(event,ui){
         $('#dialog-arrow').hide();
       },
       buttons: {
         "Open": function() {
-          var sel_var = $('#sel-localg-var').val(),
+          var sel_var = $('#sel-localgeary-var').val(),
               current_map = MapManager.getInstance().GetMap(),
               map_uuid = current_map.uuid,
               geoda = MapManager.getInstance().GetGeoDa(map_uuid);
@@ -96,10 +96,10 @@ var LocalGDlg = (function($){
             }
             var w_obj = weights_dict[w_name];
             var w_uid = w_obj.get_uid(); 
-            var pval = $('#localg-pval-sels').val();
+            var pval = $('#localgeary-pval-sels').val();
 
             prg_bar.show();
-            var lisa = geoda.local_g(map_uuid, w_uid, sel_var);
+            var lisa = geoda.local_geary(map_uuid, w_uid, sel_var);
             ProcessLisaMap(sel_var, lisa);
             prg_bar.hide();
             that.dialog("close");
@@ -130,5 +130,5 @@ var LocalGDlg = (function($){
 
 })($, Utils);
 
-return LocalGDlg;
+return LocalGearyDlg;
 });

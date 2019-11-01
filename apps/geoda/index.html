@@ -29,11 +29,11 @@
 <body>
   <div data-role="page" id="map-page">
     <div class="awesome-bar">
-      <div class="logo"></div>
+      <div class="logo">
+		  &nbsp;&nbsp;&nbsp;&nbsp;powered by libgeoda v0.0.3
+	  </div>
       <div class="header_topright">
-	<div class="account"> Account</div>
-	<div class="basemap"> Basemap</div>
-	<div class="publish" id="btnCarto"> Share</div>
+		<div class="basemap"> Basemap</div>
       </div>
     </div>
     <div role="main" class="ui-content" id="map-container">
@@ -51,26 +51,26 @@
 	  <td width=80 style='width:120px;'>
 	    <div class="blockBtn" id="btnMultiLayer"><img src="../../media/img/multilayer.png"/><span></span></div>
 	  </td>
-	  <td width=90>
-	  <div id="multilayer_arrow"></div>
-	    <div class="blockBtn" id="btnShowTable"><img src="../../media/img/table.png"/><span>Table</span></div>
-	  </td>
-	  <td width=90>
-	    <div class="blockBtn" id="btnShowEdit"><img src="../../media/img/edit.png"/><span>Edit</span></div>
-	  </td>
 	  <td width=80>
-	    <div class="blockBtn" id="btnNewMap"><img src="../../media/img/nmap.png"/><span>Map</span></div>
+	  	<div id="multilayer_arrow"></div>
+	    <div class="blockBtn" id="btnNewMap" style="margin-left:10px;"><img src="../../media/img/nmap.png"/><span>Map</span></div>
+	  </td>
+	  <td width=165>
+		<div class="blockBtn" id="btnCreateW" ><img src="../../media/img/weights.png"/><span>Spatial Weights</span></div>
 	  </td>
 	  <td width=100>
 	    <div class="blockBtn" id="btnExplore"><img src="../../media/img/hist.png"/><span>Explore</span></div>
 	  </td>
-	  <td width=150>
-	    <div class="blockBtn" id="btnSpace"><img src="../../media/img/moran.png"/><span>Spatial Analysis</span></div>
+	  <td width=220>
+	    <div class="blockBtn" id="btnSpace"><img src="../../media/img/moran.png"/><span>Spatial Autocorrelation</span></div>
 	  </td>
-	  <td width=125>
-	    <div class="blockBtn" id="btnSpreg"><img src="../../media/img/spreg.png"/><span>Regression</span></div>
+	  <td width=200>
+	    <div class="blockBtn" id="btnClustering"><img src="../../media/img/table.png"/><span>Spatial Clustering</span></div>
 	  </td>
-	  <td width=40>
+	  <td width=20>
+		<!--
+			<div class="blockBtn" id="btnSpreg"><img src="../../media/img/spreg.png"/><span>Regression</span></div>
+		-->
 	  </td>
 	  </tr>
 	</table>
@@ -83,84 +83,116 @@
     </div>
 
     <div class="tool-menu" id="edit-menu">
-      <div id="btnVoronoiMap" class="image-wrap" style="background-image: url(../../media/img/wiz-voronoi.png);">
-	<span>Voronoi Map</span>
-      </div>
       <div id="btnRoad" class="image-wrap" style="background-image: url(../../media/img/wiz-road.png);">
-	<span>Road Network Analysis</span>
+		<span>Road Network Tool</span>
       </div>
       <div id="btnSpaceTime" class="image-wrap" style="background-image: url(../../media/img/wiz-spacetime.png);">
-	<span>Space Time Aggregation</span>
+		<span>Spatial Aggregation</span>
       </div>
     </div>
 
     <div class="tool-menu" id="map-menu">
       <div id="btnSimMap" class="image-wrap" style="background-image: url(../../media/img/wiz-sim-poly.png);width: 92px; height: 82px;">
-	<span>Simple Map</span>
+		<span>Simple Map</span>
       </div>
       <div id="btnCatMap" class="image-wrap" style="background-image: url(../../media/img/wiz-cat-poly.png);">
-	<span>Choropleth Map</span>
+		<span>Choropleth Map</span>
+      </div>
+      <div id="btnDensity" class="image-wrap" style="background-image: url(../../media/img/wiz-density.jpeg);display:none;">
+		<span>Point Cloud Map</span>
+      </div>
+      <div id="btnVoronoiMap" class="image-wrap" style="background-image: url(../../media/img/wiz-voronoi.png);display:none;">
+		<span>Voronoi Map</span>
       </div>
     </div>
 
     <div class="tool-menu" id="explore-menu">
       <div id="btnHist" class="image-wrap" style="background-image: url(../../media/img/wiz-hist.png);">
-	<span>Histogram</span>
+		<span>Histogram</span>
       </div>
       <div id="btnScatter" class="image-wrap" style="background-image: url(../../media/img/wiz-scatter.png);">
-	<span>Scatter Plot</span>
+		<span>Scatter Plot</span>
       </div>
       <div id="btnScatterMatrix" class="image-wrap" style="background-image: url(../../media/img/wiz-scatter-matrix.png);">
-	<span>Scatter Matrix</span>
+		<span>Scatter Matrix</span>
       </div>
       <div id="btnParcoords" class="image-wrap" style="background-image: url(../../media/img/wiz-pcp.png);">
-	<span>Parallel Coordinates</span>
+		<span>Parallel Coordinates</span>
       </div>
       <div id="btnBoxPlot" class="image-wrap" style="background-image: url(../../media/img/wiz-boxplot.png);">
-	<span>Box Plot</span>
+		<span>Box Plot</span>
       </div>
       <div id="btnBubbleMap" class="image-wrap" style="background-image: url(../../media/img/wiz-bubblemap.png);display:none;">
-	<span>Bubble Map</span>
+		<span>Bubble Map</span>
       </div>
       <div class="image-wrap" style="background-image: url(../../media/img/wiz-chord.png);display:none;">
-	<span>Chord Diagram</span>
+		<span>Chord Diagram</span>
       </div>
     </div>
 
     <div class="tool-menu" id="space-menu">
-      <div id="btnCreateW" class="image-wrap" style="background-image: url(../../media/img/wiz-w.png); display:none;">
-	<span>Create Weights</span>
+		<!--
+      <div id="btnCreateW" class="image-wrap" style="background-image: url(../../media/img/wiz-w.png); ">
+		<span>Spatial Weights</span>
+	  </div>
+	-->
+      <div id="btnHistW" class="image-wrap" style="background-image: url(../../media/img/wiz-hist-w.png);display:none;">
+		<span>Weights Histogram</span>
       </div>
-      <div id="btnHistW" class="image-wrap" style="background-image: url(../../media/img/wiz-hist-w.png);">
-	<span>Weights Histogram</span>
-      </div>
+	  <!--
       <div id="btnMoranScatter" class="image-wrap" style="background-image: url(../../media/img/wiz-moran.png);">
-	<span>Moran Scatter Plot</span>
+		<span>Moran Scatter Plot</span>
       </div>
-      <div id="btnLISA" class="image-wrap" style="background-image: url(../../media/img/wiz-lisa.png)">
-	<span>LISA Map</span>
+	  -->
+      <div id="btnLISA" class="image-wrap" style="background-image: url(../../media/img/localmoran.png)">
+		<span>Local Moran</span>
       </div>
-      <div id="btnDensity" class="image-wrap" style="background-image: url(../../media/img/wiz-density.jpeg);">
-	<span>Density Map</span>
+      <div id="btnLocalG" class="image-wrap" style="background-image: url(../../media/img/localg.png);">
+		<span>Local Getis-Ord G</span>
       </div>
-      <div id="btnKCluster" class="image-wrap" style="background-image: url(../../media/img/wiz-cho-poly.png);">
-	<span>KCluster Map</span>
+      <div id="btnLocalGeary" class="image-wrap" style="background-image: url(../../media/img/localgeary.png);">
+		<span>Local Geary</span>
       </div>
-      <div id="btnLocalG" class="image-wrap" style="background-image: url(../../media/img/localgeary.png);">
-	<span>Local Geary</span>
+      <div id="btnLocalJoinCount" class="image-wrap" style="background-image: url(../../media/img/localjc.png);">
+		<span>Local Join Count</span>
       </div>
+	</div>
+	
+	<div class="tool-menu" id="clustering-menu">
+      <div id="btnKCluster" class="image-wrap" style="background-image: url(../../media/img/skater.png);">
+		<span>SKATER</span>
+	  </div>
+      <div id="btnREDCAP" class="image-wrap" style="background-image: url(../../media/img/redcap.png);">
+		<span>REDCAP</span>
+	  </div>
+      <div id="btnMaxp" class="image-wrap" style="background-image: url(../../media/img/maxp.png);">
+		<span>Max-p</span>
+	  </div>
+	<!--
       <div id="btnPCA" class="image-wrap" style="background-image: url(../../media/img/pca.png);">
         <span>PCA</span>
       </div>
       <div id="btnKMeans" class="image-wrap" style="background-image: url(../../media/img/kmeans.png);">
         <span>KMeans</span>
-      </div>
-    </div>
+	  </div>
+	-->
+	</div>
 
     <div class="down-arrow" id="tool-menu-arrow"></div>
     <div class="down-arrow" id="dialog-arrow"></div>
     <div id="btnOpenData"><img src="../../media/img/bigplus.png"></div>
+  	<div id="legend" class="info">Legend</div>
 
+  <div id="mapInfo" class='info'>
+    <div id="mapproviders">
+	  <img id="0" src="../../media/img/b0.png">
+	  <img id="1" src="../../media/img/b1.png">
+	  <img id="2" src="../../media/img/b2.png">
+	  <img id="3" src="../../media/img/b3.png">
+	  <img id="4" src="../../media/img/b4.png">
+	  <img id="5" src="../../media/img/b5.png">
+    </div>
+  </div>
   </div>  <!--end role "map-page"-->
 
   <!--
@@ -169,22 +201,19 @@
   ///////////////////////////////////////////////////////////////////////////////
   -->
   <div id="dialog-open-file"  title="Let's get started">
-    <div class="intro">Load your map files from one of these sources:</div>
     <div id="tabs-dlg-open-file" class="centered">
       <ul>
-      	<li><a href="#tabs-1">Local Disk</a></li>
+		  <li><a href="#tabs-1">Load your map files:</a></li>
+		  <!--
       	<li><a href="#tabs-2">CartoDB</a></li>
-      	<li><a href="#tabs-3">Dropbox</a></li>
+		  <li><a href="#tabs-3">Dropbox</a></li>
+		  -->
       </ul>
 	  <div id="tabs-1">
-		<div id="drop_zone">Drop files here</div>
+		<div id="drop_zone">Drop a geojson file here</div>
 		<div id="progress_bar"><div class="percent">0%</div></div>
-		<span class="tip">Supported files: a zip file of <img src="../../media/img/file-json.png"> or
-		<img src="../../media/img/file-shp.png" alt="*.shp file">+
-		<img src="../../media/img/file-dbf.png" alt="*.dbf file">+
-		<img src="../../media/img/file-shx.png" alt="*.shx file">+
-		<img src="../../media/img/file-prj.png" alt="*.prj file"></span>
 	  </div>
+	  <!--
 	<div id="tabs-2">
 	  <form id="cartodb-form">
 	  <table class="tableContainer">
@@ -206,7 +235,27 @@
    	</div>
     <div id="tabs-3">
 	  <div id="dropbox_div"></div>
-    </div>
+	</div>
+-->
+	<div class="intro">Or, click one of the sample dataset below:</div>
+	<div>
+		<table>
+			<tr>
+				<td style="text-align: center;">
+					<img src="../../media/img/Guerry.png" class="sample"  id="sample_guerry">
+					<br/>2.0Mb
+				</td>
+				<td style="text-align: center;">
+					<img src="../../media/img/USHomicides.png" class="sample" id="sample_nat">
+					<br/>7.1Mb
+				</td>
+				<td style="text-align: center;">
+					<img src="../../media/img/SanFranCrime.png" class="sample" id="sample_sf">
+					<br/>1.4Mb
+				</td>
+			</tr>
+		</table>
+	</div>
     <div class="gda-prg-bar" id="progress_bar_openfile"><img src="../../media/img/progress-bar.gif"></div>
   </div>
 
@@ -228,9 +277,6 @@
 	    </tr>
 	    <tr><td></td>
 	      <td>
-	  {% if auth_provider != "" %}
-	      <input type="checkbox" id="auth_provider" checked> Share this map to your "{{ auth_provider }}" account
-	  {% endif %}
 	      </td>
 	    </tr>
 	  </table>
@@ -385,7 +431,7 @@
   //  LISA Map
   ///////////////////////////////////////////////////////////////////////////////
   -->
-  <div class="mainDlg"  id="dlg-lisa-map" title="Create LISA Map">
+  <div class="mainDlg"  id="dlg-lisa-map" title="Univariate Local Moran">
     <br><br>
     <table>
     <tr>
@@ -398,11 +444,14 @@
     </tr>
     <tr>
       <td width="200"><label for="name">Select weights:</label></td>
-      <td></td>
+      <td><div id='lisa-weights-plugin'></div></td>
+    </tr>
+    <tr>
+      <td width="200"><label for="name">Randomization (#permutations):</label></td>
+      <td><input type="text" id="local-moran-perm" style="width: 70px;" value="999" readonly></td>
     </tr>
    </table>
     <br/>
-    <div id='lisa-weights-plugin'></div>
     <br/>
     <div class="gda-prg-bar" id="progress_bar_lisa"><img src="../../media/img/progress-bar.gif"></div>
   </div>
@@ -412,23 +461,169 @@
   //  KCluster Map
   ///////////////////////////////////////////////////////////////////////////////
   -->
-  <div class="mainDlg"  id="dlg-kcluster-map" title="Create KCluster Map">
-    <table width="90%">
-    <tr>
-      <td width="100px"><label for="name">Select weights:</label></td>
-      <td></td>
-    </tr>
-   </table>
-    <div id='kcluster-weights-plugin'></div>
-    <table width="90%">
-    <tr>
-      <td width="100px" style="vertical-align:top"><label for="name">Select variables:</label></td>
-      <td width="200px"><div id="kcluster-sels" class="left_al scroll_v_div"></div></td>
-    </tr>
+  <div class="mainDlg"  id="dlg-kcluster-map" title="SKATER">
+    <table >
+		<tr>
+			<td width="150px"><label for="name">Number of Cluster:</label></td>
+			<td><input type="text" id="input-skater-k" value="4"></td>
+		</tr>
+		<tr>
+			<td width="150px"><label for="name">Select Weights:</label></td>
+			<td><div id='skater-weights-plugin'></div></td>
+		</tr>
+		<tr>
+			<td width="150px" style="vertical-align:top"><label for="name">Minimum Bound:</label></td>
+			<td>
+				<input type="checkbox" id="chk-skater-mbound" id=0>
+				<select id="sel-skater-bound-var" style="width: 120px;"></select>
+				<input type="text" id="input-skater-mbound" style="width: 70px;">
+				<br/>
+				<table>
+					<tr>
+						<td>
+							<div id="slider-skater-bound" style="width:130px;"></div>
+						</td>
+						<td>
+							<input type="text" id="input-skater-mbound-pct" value="10%" style="width: 70px;">
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td width="150px" style="vertical-align:top"><label for="name">Select Variables:</label></td>
+			<td><div id="skater-sels" class="left_al scroll_v_div"></div></td>
+		</tr>
     </table>
     <br/>
-    <div class="gda-prg-bar" id="progress_bar_kcluster"><img src="../../media/img/progress-bar.gif"></div>
+    <div class="gda-prg-bar" id="progress_bar_skater"><img src="../../media/img/progress-bar.gif"></div>
+  </div>
 
+  <!--
+  ///////////////////////////////////////////////////////////////////////////////
+  //  REDCAP Map
+  ///////////////////////////////////////////////////////////////////////////////
+  -->
+  <div class="mainDlg"  id="dlg-redcap" title="REDCAP">
+    <table >
+		<tr>
+			<td width="150px"><label for="name">Number of Cluster:</label></td>
+			<td><input type="text" id="input-redcap-k" value="4"></td>
+		</tr>
+		<tr>
+			<td width="150px"><label for="name">Select Weights:</label></td>
+			<td><div id='redcap-weights-plugin'></div></td>
+		</tr>
+		<tr>
+			<td width="150px"><label for="name">Select Method:</label></td>
+			<td>
+				<select id="sel-redcap-method">
+					<option valu="firstorder-singlelinkage">firstorder-singlelinkage</option>
+					<option valu="fullorder-completelinkage">fullorder-completelinkage</option>
+					<option valu="fullorder-averagelinkage" selected>fullorder-averagelinkage</option>
+					<option valu="fullorder-singlelinkage">fullorder-singlelinkage</option>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td width="150px" style="vertical-align:top"><label for="name">Minimum Bound:</label></td>
+			<td>
+				<input type="checkbox" id="chk-redcap-mbound" id=0>
+				<select id="sel-redcap-bound-var" style="width: 120px;"></select>
+				<input type="text" id="input-redcap-mbound" style="width: 70px;">
+				<br/>
+				<table>
+					<tr>
+						<td>
+							<div id="slider-redcap-bound" style="width:130px;"></div>
+						</td>
+						<td>
+							<input type="text" id="input-redcap-mbound-pct" value="10%" style="width: 70px;">
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td width="150px" style="vertical-align:top"><label for="name">Select Variables:</label></td>
+			<td><div id="redcap-sels" class="left_al scroll_v_div"></div></td>
+		</tr>
+    </table>
+    <br/>
+    <div class="gda-prg-bar" id="progress_bar_redcap"><img src="../../media/img/progress-bar.gif"></div>
+  </div>
+
+  <!--
+  ///////////////////////////////////////////////////////////////////////////////
+  //  Maxp Map
+  ///////////////////////////////////////////////////////////////////////////////
+  -->
+  <div class="mainDlg"  id="dlg-maxp" title="Max-p">
+    <table >
+		<tr>
+			<td width="150px"><label for="name">Select Weights:</label></td>
+			<td><div id='maxp-weights-plugin'></div></td>
+		</tr>
+		<tr>
+			<td width="150px" style="vertical-align:top"><label for="name">Select Method:</label></td>
+			<td>
+				<select id="sel-maxp-method">
+					<option valu="greedy" selected>Greedy</option>
+					<option valu="tabu">Tabu Search</option>
+					<option valu="sa">Simulated Annealing</option>
+				</select>
+				<div id="tabu-div">
+				<table >
+					<tr>
+						<td><label for="name">Tabu Length:</label></td>
+						<td><input type="text" id="input-tabu-length" value="85" style="width:100px"></td>
+					</tr>
+				</table>
+				</div>
+				<div id="sa-div">
+				<table >
+					<tr>
+						<td><label for="name">Cooling Rate:</label></td>
+						<td><input type="text" id="input-cooling-rate" value="0.85" style="width:100px"></td>
+					</tr>	
+				</table>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td width="150px" style="vertical-align:top"><label for="name">Minimum Bound:</label></td>
+			<td>
+				<input type="checkbox" id="chk-maxp-mbound">
+				<select id="sel-maxp-bound-var" style="width: 120px;"></select>
+				<input type="text" id="input-maxp-mbound" style="width: 70px;">
+				<br/>
+				<table>
+					<tr>
+						<td>
+							<div id="slider-maxp-bound" style="width:130px;"></div>
+						</td>
+						<td>
+							<input type="text" id="input-maxp-mbound-pct" value="10%" style="width: 70px;">
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td width="150px"><label for="name">Minimum # per Region:</label></td>
+			<td><input type="text" id="input-maxp-k"></td>
+		</tr>
+		<tr>
+			<td width="150px"><label for="name"># Iterations:</label></td>
+			<td><input type="text" id="input-maxp-iterations" value="99"></td>
+		</tr>
+		<tr>
+			<td width="150px" style="vertical-align:top"><label for="name">Select Variables:</label></td>
+			<td><div id="maxp-sels" class="left_al scroll_v_div"></div></td>
+		</tr>
+    </table>
+    <br/>
+    <div class="gda-prg-bar" id="progress_bar_maxp"><img src="../../media/img/progress-bar.gif"></div>
   </div>
 
   <!--
@@ -436,30 +631,95 @@
   //  LocalG Map
   ///////////////////////////////////////////////////////////////////////////////
   -->
-  <div class="mainDlg"  id="dlg-localg-map" title="Create Local Geary Map">
-    <br/>
-    <div class="gda-prg-bar" id="progress_bar_localg"><img src="../../media/img/progress-bar.gif"></div>
-    <table width="90%">
-    <tr>
-      <td width="100px"><label for="name">Select weights:</label></td>
-      <td></td>
-    </tr>
+  <div class="mainDlg"  id="dlg-localg-map" title="Local Getis-Ord">
+    <br><br>
+    <table>
+		<tr>
+			<td width="200"><label for="name">Select a variable:</label></td>
+			<td><select id="sel-localg-var"></td>
+		</tr>
+		<tr>
+			<td ><label for="name">Select p-value threshold:</label></td>
+			<td ><select id="localg-pval-sels"><option value=0.05>0.05</option><option value=0.01>0.01</option><option value=0.001>0.001</option></select></td>
+		</tr>
+		<tr>
+			<td width="200"><label for="name">Select weights:</label></td>
+			<td><div id='localg-weights-plugin'></div></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td><input type="checkbox" id="chk-local-gstar" id=0>Calculates the Getis-Ord Gi* statistic?
+			</td>
+		</tr>
+		<tr>
+		<td width="200"><label for="name">Randomization (#permutations):</label></td>
+		<td><input type="text" id="local-moran-perm" style="width: 70px;" value="999" readonly></td>
+		</tr>
    </table>
-    <div id='localg-weights-plugin'></div>
-    <table width="90%">
-    <tr>
-	<td width="150px" style="vertical-align:top"><label for="name">Select p-value threshold:</label></td>
-      <td width="80px"><select id="localg-pval-sels"><option value=0.05>0.05</option><option value=0.01>0.01</option><option value=0.001>0.001</option></select></td>
-    </tr>
-    </table>
-    <table width="90%">
-    <tr>
-      <td width="100px" style="vertical-align:top"><label for="name">Select variables:</label></td>
-      <td width="200px"><div id="localg-sels" class="left_al scroll_v_div"></div></td>
-    </tr>
-    </table>
-    <br/>
+   <br/>
+   <br/>
+   <div class="gda-prg-bar" id="progress_bar_localg"><img src="../../media/img/progress-bar.gif"></div>
   </div>
+
+  <!--
+///////////////////////////////////////////////////////////////////////////////
+//  Local Geary Map
+///////////////////////////////////////////////////////////////////////////////
+-->
+<div class="mainDlg"  id="dlg-localgeary-map" title="Local Geary">
+	<br><br>
+	<table>
+		<tr>
+			<td width="200"><label for="name">Select a variable:</label></td>
+			<td><select id="sel-localgeary-var"></td>
+		</tr>
+		<tr>
+			<td ><label for="name">Select p-value threshold:</label></td>
+			<td ><select id="localgeary-pval-sels"><option value=0.05>0.05</option><option value=0.01>0.01</option><option value=0.001>0.001</option></select></td>
+		</tr>
+		<tr>
+			<td width="200"><label for="name">Select weights:</label></td>
+			<td><div id='localgeary-weights-plugin'></div></td>
+		</tr>
+		<tr>
+		<td width="200"><label for="name">Randomization (#permutations):</label></td>
+		<td><input type="text" id="local-moran-perm" style="width: 70px;" value="999" readonly></td>
+		</tr>
+	</table>
+	<br/>
+	<br/>
+	<div class="gda-prg-bar" id="progress_bar_localg"><img src="../../media/img/progress-bar.gif"></div>
+</div>
+
+<!--
+///////////////////////////////////////////////////////////////////////////////
+//  Local Join Count Map
+///////////////////////////////////////////////////////////////////////////////
+-->
+<div class="mainDlg"  id="dlg-localjc-map" title="Local Join Count">
+	<br><br>
+	<table>
+		<tr>
+			<td width="200"><label for="name">Select a variable:</label></td>
+			<td><select id="sel-localjc-var"></td>
+		</tr>
+		<tr>
+			<td ><label for="name">Select p-value threshold:</label></td>
+			<td ><select id="localjc-pval-sels"><option value=0.05>0.05</option><option value=0.01>0.01</option><option value=0.001>0.001</option></select></td>
+		</tr>
+		<tr>
+			<td width="200"><label for="name">Select weights:</label></td>
+			<td><div id='localjc-weights-plugin'></div></td>
+		</tr>
+		<tr>
+		<td width="200"><label for="name">Randomization (#permutations):</label></td>
+		<td><input type="text" id="local-moran-perm" style="width: 70px;" value="999" readonly></td>
+		</tr>
+	</table>
+	<br/>
+	<br/>
+	<div class="gda-prg-bar" id="progress_bar_localg"><img src="../../media/img/progress-bar.gif"></div>
+</div>
 
   <!--
   ///////////////////////////////////////////////////////////////////////////////
@@ -647,12 +907,11 @@
     <tr>
       <td><label for="name">Select quantification method:</label></td>
       <td><select id="sel-quan-method">
-	<option value="quantile">Quantile</option>
-	<option value="natural breaks">Natural Breaks</option>
-	<option value="equal interval">Equal Interval</option>
-	<option value="fisher jenks">Fisher Jenks</option>
-	<option value="hinge15">Box Map (hinge=1.5)</option>
-	<option value="hinge30">Box Map (hinge=3.0)</option>
+	<option value="quantile_breaks">Quantile</option>
+	<option value="natural_breaks">Natural Breaks</option>
+	<option value="stddev_breaks">Standard Deviation</option>
+	<option value="hinge15_breaks">Box Map (hinge=1.5)</option>
+	<option value="hinge30_breaks">Box Map (hinge=3.0)</option>
       </td>
     </tr>
     <tr>
@@ -685,128 +944,129 @@
   // Weights Creation
   ///////////////////////////////////////////////////////////////////////////////
   -->
-  <div class="mainDlg"  id="dialog-weights"  title="Weights Creation Dialog">
-    <style>
-    </style>
+  <div class="mainDlg"  id="dialog-weights"  title="Spatial Weights">
     <table>
       <tr>
-	<td><li>Please input a Weights name:</li></td>
-	<td><input type="text" id="txt-w-name"></td>
-      </tr>
-      <tr>
-	<td><li>Select an ID variable for weights file:</li></td>
-	<td>
-	<select id='sel-w-id'></select>
-	<img id="img-id-chk" src="../../media/img/checkmark.png">
-	<img id="img-id-nochk" src="../../media/img/uncheckmark.gif">
-	<img id="img-id-spin" src="../../media/img/loading_small.gif">
-	</td>
-      </tr>
-      <tr>
-	<td></td>
-	<td><a href='#' id="btn-w-add-uid">Add an unique ID</a></td>
+		<td><li>Please input a Weights name:</li></td>
+		<td><input type="text" id="txt-w-name"></td>
       </tr>
     </table>
     <br/>
-    <br/>
-    <div id="weights-plugin">
+    
     <div id="tabs-dlg-weights"  class="centered">
       <ul>
-	<li><a href="#tabs-1">Contiguity</a></li>
-	<li><a href="#tabs-2">Distance</a></li>
-	<li><a href="#tabs-3">Adaptive Kernel</a></li>
+		<li><a href="#tabs-1">Contiguity</a></li>
+		<li><a href="#tabs-2">Distance</a></li>
+		<li><a href="#tabs-3">Adaptive Kernel</a></li>
       </ul>
       <div id="tabs-1">
-	<form id="cont-form">
-	  <table>
-	    <tr>
-	      <td>Contiguity Type</td>
-	      <td>
-		<select id="sel-cont-type">
-		  <option value="0" selected>Rook</option>
-		  <option value="1">Queen</option>
-		</select>
-	      </td>
-	    </tr>
-	    <tr>
-	      <td>Order of Contiguity</td>
-	      <td><input id="spn-cont-order" value=1></td>
-	    </tr>
-	    <tr>
-	      <td>Include Lower Orders</td>
-	      <td><input type="checkbox" id="cbx-cont-ilo"></td>
-	    </tr>
-	  </table>
-	</form>
+		<table>
+			<tr>
+				<td>Contiguity Type:&nbsp;</td>
+				<td>
+					<select id="sel-cont-type">
+					<option value="0" selected>Rook</option>
+					<option value="1">Queen</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>Order of Contiguity:&nbsp;</td>
+				<td><input id="spn-cont-order" value=1></td>
+			</tr>
+			<tr>
+				<td>Include Lower Orders:&nbsp;</td>
+				<td><input type="checkbox" id="cbx-cont-ilo"></td>
+			</tr>
+			<tr>
+				<td>Distance Threshold:&nbsp;</td>
+				<td><input type="text" id="cont-dist-thres" value="0.0"></td>
+			</tr>
+		</table>
       </div>
       <div id="tabs-2">
-	<table>
-	  <tr>
-	    <td>Select Distance Metric</td>
-	    <td>
-	      <select id="sel-dist-metr">
-		<option value="0" selected>Euclidean Distance</option>
-		<option value="1">Arc Distance (miles)</option>
-		<option value="2">Arc Distance (kilometers)</option>
-	      </select>
-	    </td>
-	  </tr>
-	  <tr height="22px">
-	    <td><input type="radio" name="rdo-dist" id=0> k-Nearest Neighbors</td>
-	    <td># of neighbors <input id="spn-dist-knn" value="1"></td>
-	  </tr>
-	  <tr>
-	    <td><input type="radio" name="rdo-dist" id=1>Threshold Distane</td>
-	    <td>
-	      <input type="text" id="txt-dist-thr" value="0.0" style="float:left;margin-right:100px;width:100px">
-	      <div id="dist-slider" style="margin: 5px 0 0 120px;"></div>
-	      <img id="w-dist-loading" src="../../media/img/loading_small.gif">
-	    </td>
-	  </tr>
-	  <tr>
-	    <td><input type="radio" name="rdo-dist" id=2>Power of Inverse Distance</td>
-	    <td><input id="spn-pow-idst" value="1"></td>
-	  </tr>
-	</table>
+		<table>
+		<tr>
+			<td>Select Distance Metric</td>
+			<td>
+			<select id="sel-dist-metr">
+			<option value="0" selected>Euclidean Distance</option>
+			<option value="1">Arc Distance (miles)</option>
+			<option value="2">Arc Distance (kilometers)</option>
+			</select>
+			</td>
+		</tr>
+		<tr height="22px">
+			<td><input type="radio" name="rdo-dist" id=0 checked> k-Nearest Neighbors</td>
+			<td># of neighbors <input id="spn-dist-knn" value="4"></td>
+		</tr>
+		<tr>
+			<td><input type="radio" name="rdo-dist" id=1>Threshold Distane</td>
+			<td>
+			<input type="text" id="txt-dist-thr" value="0.0" style="float:left;margin-right:100px;width:100px">
+			<div id="dist-slider" style="margin: 5px 0 0 120px;"></div>
+			<img id="w-dist-loading" src="../../media/img/loading_small.gif">
+			</td>
+		</tr>
+		<tr>
+			<td><input type="checkbox" id="cbx-w-inverse">Power of Inverse Distance</td>
+			<td><input id="spn-pow-idst" value="1"></td>
+		</tr>
+		</table>
       </div>
       <div id="tabs-3">
-	<table>
-	  <tr>
-	    <td>Select Kernel Function Type</td>
-	    <td>
-		<select id="sel-kel-type">
-		<option value="0" selected>Uniform</option>
-		<option value="1">Triangular</option>
-		<option value="2">Quadratic</option>
-		<option value="3">Quartic</option>
-		<option value="4">Gaussian</option>
-		</select>
-	    </td>
-	  </tr>
-	  <tr>
-	    <td>Numbe of Neighbors</td>
-	    <td><input type="text" id="txt-kel-nn" value="1"></td>
-	  </tr>
-	</table>
+		<table>
+		<tr>
+			<td style="width: 240px; vertical-align:top">Kernel Function: &nbsp;</td>
+			<td>
+				<select id="sel-kel-type">
+				<option value="uniform" selected>Uniform</option>
+				<option value="triangular">Triangular</option>
+				<option value="epanechnikov">Epanechnikov</option>
+				<option value="quartic">Quartic</option>
+				<option value="gaussian">Gaussian</option>
+				</select>
+				<br/>
+				<input type="radio" name="rdo-w-diagonal" id=0 checked>Diagonal weights=1
+				<br/>
+				<input type="radio" name="rdo-w-diagonal" id=1>Apply kernel to diagonal weights
+				<br/>
+				<br/>
+			</td>
+		</tr>
+		<tr>
+			<td style="vertical-align:top"><input type="radio" name="rdo-w-kernel-spec" id=0>Specify Bandwidth:&nbsp;</td>
+			<td>
+				<input type="text" id="txt-ker-dist-thr" value="0.0" style="float:left;margin-right:100px;width:100px">
+				<div id="ker-dist-slider" style="margin: 5px 0 0 120px; width: 80px"></div>
+			</td>
+		</tr>
+		<tr>
+			<td style="vertical-align:top"><input type="radio" name="rdo-w-kernel-spec" id=1 checked>Adaptive bandwidth:&nbsp;</td>
+			<td>Numbe of Neighbors:&nbsp;<input type="text" id="txt-kel-nn" value="5"></td>
+		</tr>
+		<tr>
+			<td><input type="radio" name="rdo-w-kernel-spec" id=2>Use max knn distance as bandwidth&nbsp;</td>
+			<td></td>
+		</tr>
+		</table>
       </div>
     </div>
-    </div>
-    <!--
-    <br/><br/><br/>
+
+	<br/>
+    <div class="dlg-loading"></div>
+    <br/>
     <table>
       <tr>
-	<td width=200><li>Select to download a Weights file</li></td>
-	<td><select id='sel-w-type'>
-	    <option value="gal" selected>GAL</option>
-	    <option value="gwt">GWT</option>
-	    <option value="kwt">KWT</option>
-	  </select>
-	</td>
-	<td><select id='sel-w-files'></select></td>
+		<td width=200><li>Current selected weights</li></td>
+		<td>
+			<div id="weights-plugin">
+				<select id='sel-w-files'></select>
+			</div>
+		</td>
       </tr>
-    </table>
-    -->
-    <div class="dlg-loading"></div>
+	</table>
+	<div id="weights-meta"></div>
   </div>
 
   <div class="mainDlg"  id="dlg-add-uniqid" title="Add Unique ID">
@@ -1061,7 +1321,7 @@
 			</td>
 		      </tr>
 		      <tr>
-			<td><input type="radio" name="spreg-rdo-dist" id=2>Power of Inverse Distance</td>
+			<td><input type="checkbox" name="spreg-rdo-dist" id=2>Power of Inverse Distance</td>
 			<td><input id="spreg-spn-pow-idst" value="1"></td>
 		      </tr>
 		    </table>
@@ -1069,20 +1329,20 @@
 		  <div id="tabs-2">
 		    <table>
 		      <tr>
-			<td>Select Kernel Function Type</td>
-			<td>
-			    <select id="spreg-sel-kel-type">
-			    <option value="0" selected>Uniform</option>
-			    <option value="1">Triangular</option>
-			    <option value="2">Quadratic</option>
-			    <option value="3">Quartic</option>
-			    <option value="4">Gaussian</option>
-			    </select>
-			</td>
+				<td>Select Kernel Function Type</td>
+				<td>
+					<select id="spreg-sel-kel-type">
+					<option value="0" selected>Uniform</option>
+					<option value="1">Triangular</option>
+					<option value="2">Quadratic</option>
+					<option value="3">Quartic</option>
+					<option value="4">Gaussian</option>
+					</select>
+				</td>
 		      </tr>
 		      <tr>
-			<td>Numbe of Neighbors</td>
-			<td><input type="text" id="spreg-txt-kel-nn" value="1"></td>
+				<td>Numbe of Neighbors</td>
+				<td><input type="text" id="spreg-txt-kel-nn" value="1"></td>
 		      </tr>
 		    </table>
 		  </div>
@@ -1090,9 +1350,9 @@
 	      </div>
 	      <h2><a href="#">Model Weights (optional)</a></h2>
 	      <div id="model-weights-plugin-container">
-		<input type="checkbox" name="spreg-check-model-w">select a model weights for spatial regression</input>
-		<div id="model-weights-plugin">
-		</div>
+			<input type="checkbox" name="spreg-check-model-w">select a model weights for spatial regression</input>
+			<div id="model-weights-plugin">
+			</div>
 	      </div>
 	    </div>
 	  </div>
@@ -1104,7 +1364,7 @@
 	      <input class="search" placeholder="Search" />
 	      <button class="sort" data-sort="name">Sort</button>
 	      <ul id="ul-x-variables" class="list">
-		<li><p class="name">x1</p></li>
+			<li><p class="name">x1</p></li>
 	      </ul>
 	    </div>
 	  </div>
@@ -1314,41 +1574,12 @@
     </div>
   </div>
 
-  <div id="userInfo" class="info-div">
-    <p>{{userid}}
-      {% if auth_provider == "twitter" %}
-	<img src="../../media/img/account-twitter.png">
-      {% elif auth_provider == "google" %}
-	<img src="../../media/img/account-google.png">
-      {% elif auth_provider == "facebook" %}
-	<img src="../../media/img/account-facebook.png">
-      {% elif auth_provider == "tumblr" %}
-	<img src="../../media/img/account-tumblr.png">
-      {% endif %}
-      <button id="btn_logout" class="ui-button ui-widget ui-state-default ui-corner-all">Logout</button>
-    </p>
-    <span>Storage Usage: <img src="../../media/img/capacity.png" class="capacity"></span>
-  </div>
-
-  <div id="mapInfo" class='info-div'>
-    <div id="mapproviders">
-	  <img id="0" src="../../media/img/b0.png">
-	  <img id="1" src="../../media/img/b1.png">
-	  <img id="2" src="../../media/img/b2.png">
-	  <img id="3" src="../../media/img/b3.png">
-	  <img id="4" src="../../media/img/b4.png">
-	  <img id="5" src="../../media/img/b5.png">
-    </div>
-  </div>
-
   <div id="prgInfo" class="info-div">
     <span>Uploading data ...</span><br/>
     <img src="../../media/img/progress-bar.gif">
   </div>
 
   <div id="divPop" class="bubble">This is Popup Div.</div>
-
-  <div id="legend" class="info" style="z-index:9999;position:fixed;top:200px;right:5px;">Legend</div>
 
   <div id="googlemap" style="display: none"></div>
 

@@ -129,12 +129,11 @@ var ChoroplethDlg = (function($){
 
   $('#sel-quan-method').change( function (event, ui) { 
       var sel_method = $('#sel-quan-method').val();
-      if (sel_method == "hinge15" || sel_method == "hinge30") {
+      if (sel_method == "hinge15_breaks" || sel_method == "hinge30_breaks" || sel_method == "stddev_breaks") {
         $('#quan-cate').val(6);
         $('#quan-cate').prop('disabled', 'disabled');
         $('#color-selector').prop('disabled', 'disabled');
       } else {
-        $('#quan-cate').val(5);
         $('#quan-cate').prop('disabled', false);
         $('#color-selector').prop('disabled', false);
       }
@@ -174,61 +173,46 @@ var ChoroplethDlg = (function($){
             clr_name = $('#color-selector option:selected').text(),
             k = parseInt(sel_cat),
             colors = colorbrewer[clr_name][k],
-            colorTheme = {};
+            colorTheme = {},
+            geoda = MapManager.getInstance().GetGeoDa(map_uuid);
 
         for (var i=0; i<k; i++) {
           colorTheme[colors[i]] = [];
         }
 
-        var params = {
-          "method": sel_method,
-          "var": sel_var,
-          "k": sel_cat,
-          "layer_uuid" :  map_uuid,
-        };
         var that = $(this);
-        current_map.GetNumericCol(sel_var); 
+        var vals = current_map.GetNumericCol(sel_var); 
 
-        $.get('../thematic_map/', params).done(function(data){
+        var data = geoda.custom_breaks(map_uuid, sel_method, parseInt(sel_cat), sel_var, vals); 
 
-          var clr_name = $('#color-selector option:selected').text(),
-              colors = colorbrewer[clr_name][data.k],
-              colorTheme = {};
-              
-          if (sel_method == "hinge15" || sel_method == "hinge30") {
-            colors = ["#4575b4", "#91bfdb", "#dceef3", "#FAE3D4", "#e9a07c","#d73027"];
-            var txt_bins = ["Lower outlier","<25%","25-50%","50-75%",">75%","Upper outlier"];
-            for (var i=0, n = colors.length; i < n; i++) {
-              var txt = "";
-              var _bin = data.bins[i] === undefined ? data.bins[i-1] : data.bins[i];
-                var lower, upper = _bin.toFixed(2);
-                if (i > 0 && data.bins[i] !== undefined) {
-                  lower = data.bins[i-1].toFixed(2);
-                  txt = lower ? "(" + lower + ", " + upper + "]" : "<=" + upper;
-                } else if (i==0) {
-                  txt = "< " + upper;
-                } else if (i>0) {
-                  txt = "> " + upper;
-                }
-              txt_bins[i] += " " + txt;
-            }
-            data.bins = txt_bins; 
+        var clr_name = $('#color-selector option:selected').text(),
+            colors = colorbrewer[clr_name][data.k],
+            colorTheme = {};
+            
+        if (sel_method == "stddev_breaks" || sel_method == "hinge15_breaks" || sel_method == "hinge30_breaks") {
+          colors = ["#4575b4", "#91bfdb", "#dceef3", "#FAE3D4", "#e9a07c","#d73027"];
+        }
+        if (sel_method == "hinge15_breaks" || sel_method == "hinge30_breaks") {
+          var txt_bins = ["Lower outlier","<25%","25-50%","50-75%",">75%","Upper outlier"];
+          for (var i=0, n = colors.length; i < n; i++) {
+            txt_bins[i] += " " + data.bins[i];
           }
+          data.bins = txt_bins; 
+        }
 
-          for ( var i=0, n = data.id_array.length; i<n; i++ ) {
-            colorTheme[colors[i]] = data.id_array[i];
-          }
-          var legend_txts = Utils.create_legend($('#legend'), data.bins, colors, data.col_name);
-          mapCanvas.updateColor(colorTheme, sel_var, data.bins, colors, legend_txts);
+        for ( var i=0, n = data.id_array.length; i<n; i++ ) {
+          colorTheme[colors[i]] = data.id_array[i];
+        }
+        var legend_txts = Utils.create_legend($('#legend'), data.bins, colors, data.col_name);
+        mapCanvas.updateColor(colorTheme, sel_var, data.bins, colors, legend_txts);
 
-          var type = " (" + data.col_name + ",k=" + data.k + ")",
-              curTreeItem = $($('#sortable-layers li')[0]);
+        var type = " (" + data.col_name + ",k=" + data.k + ")",
+            curTreeItem = $($('#sortable-layers li')[0]);
 
-          newLayerName = $('#btnMultiLayer span').text() + type;
-          $(curTreeItem.children()[1]).text(newLayerName);
+        newLayerName = $('#btnMultiLayer span').text() + type;
+        $(curTreeItem.children()[1]).text(newLayerName);
 
-          that.dialog("close");
-        });
+        that.dialog("close");
 
       },
       Cancel: function() {

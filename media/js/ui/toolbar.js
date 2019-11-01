@@ -22,7 +22,8 @@ var Toolbar = (function($, FileDlg){
       '#btnShowEdit':'#edit-menu',
       '#btnExplore':'#explore-menu',
       '#btnSpace':'#space-menu',
-      //'#btnSpreg':'#spreg-menu'
+      //'#btnSpreg':'#spreg-menu',
+      '#btnClustering':'#clustering-menu',
     };
 
     var OnToolMenuClick = function(btn, menu) {
@@ -67,8 +68,12 @@ var Toolbar = (function($, FileDlg){
       '#btnKCluster' : '#dlg-kcluster-map',
       '#btnLocalG' : '#dlg-localg-map',
       '#btnParcoords' : '#dlg-parcoords',
-      '#btnPCA' : '#dlg-pca',
-      '#btnKMeans' : '#dlg-kmeans',
+      '#btnLocalGeary' : '#dlg-localgeary-map',
+      '#btnLocalJoinCount' : '#dlg-localjc-map',
+      '#btnREDCAP' : '#dlg-redcap',
+      '#btnMaxp' : '#dlg-maxp',
+      //'#btnPCA' : '#dlg-pca',
+      //'#btnKMeans' : '#dlg-kmeans',
       //'#btnCarto' : '#dialog-cartodb',
     };
 
@@ -80,13 +85,13 @@ var Toolbar = (function($, FileDlg){
 	      });
       $(btnID).click(function(){
   	     // fade all buttons first
-  	     $('.image-wrap').css({"-webkit-filter":"grayscale(100%) opacity(0.8)",});
+  	     //$('.image-wrap').css({"-webkit-filter":"grayscale(100%) opacity(0.8)",});
         // hide all other dialogs first
         $('.ui-dialog-content').dialog('close');
 	      // then open targeting dialog
         $(dlgID).dialog('open');
 	      // highligh current button also
-	      $(this).css({"-webkit-filter":"grayscale(0%)"});
+	      //$(this).css({"-webkit-filter":"grayscale(0%)"});
       });
     };
 
@@ -123,7 +128,7 @@ var Toolbar = (function($, FileDlg){
     });
 
     $('#btnSpreg').click(function(){
-	  $('.ui-dialog-content').dialog('close');
+	    $('.ui-dialog-content').dialog('close');
       $('#dialog-regression').dialog('open');
     });
 
@@ -135,7 +140,7 @@ var Toolbar = (function($, FileDlg){
     });
 
     var toolbar_buttons = [
-      '#btnShowTable',
+      '#btnClustering',
       '#btnShowEdit',
       '#btnNewMap',
       '#btnExplore',
@@ -186,7 +191,7 @@ var Toolbar = (function($, FileDlg){
       },
 
       Hide : function() {
-	ToggleButtons(false);
+        ToggleButtons(false);
       },
     };
   };

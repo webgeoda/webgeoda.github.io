@@ -2,41 +2,6 @@
 // Author: xunli at asu.edu
 define(['jquery', './utils', './mapManager','./cartoProxy'], function($, Utils, MapManager, CartoProxy) {
 
-/*
-var AbstractPlot = function() {
-  // common area
-  self = this;
-  this.id = Utils.popWindow();
-  this.map = MapManager.getInstance().GetMap();
-  this.map_uuid = this.map.uuid;
-
-  $("#" + this.id).bind('resize', this.resize);
-  this.resizeTimer;
-  // end of common area
-};
-
-AbstractPlot.prototype = {
-  resize : function() {
-    console.log("resize");
-
-    var container_id = "#" + self.id + " > .pop-container";
-    $(container_id).empty();
-    clearTimeout(self.resizeTimer);
-    resizeTimer = setTimeout(function() {
-      self.show();
-    }, 500);
-  },
-
-  show : function() {
-
-  },
-
-  print : function() {
-    console.log("Box plot");
-  }
-};
-*/
-
 d3.box = function() {
   var width = 1,
       height = 1,
@@ -373,10 +338,8 @@ function iqr(k) {
   };
 }
 
-var BoxPlot = function(csv_content) {
-  var header = csv_content.substr(0, csv_content.indexOf('\n')),
-      fields = header.split(','),
-      n_fields = fields.length;
+var BoxPlot = function(fields, data) {
+  var n_fields = fields.length;
 
   var win_width = 120 * n_fields;
   if (win_width > 1600) win_width = 1600;
@@ -395,23 +358,23 @@ var BoxPlot = function(csv_content) {
   var min = Infinity,
       max = -Infinity;
 
+  // [['crm_prp, [sorted values] ],[]]
+  this.data = [];
+  for (var j =0; j<n_fields; j++) {
+    this.data.push([fields[j], []]);
+  }
 
-  var data = [];
-  fields.forEach(function(d,i) {
-    data.push([d, []]);
-  });
-
-  var csv= d3.csv.parse(csv_content);
-  csv.forEach(function(d,i) {
+  let n = data[ fields[0] ].length;
+  for (let i=0; i < n; ++i ) {
     for (var j =0; j<n_fields; j++) {
-      var v = +d[fields[j]];
-      data[j][1].push( {'id':i, 'v':v} );
+      var v = data[ fields[j] ][i];
+      this.data[j][1].push( {'id':i, 'v':v} );
       if (v > max) max = v;
       if (v < min) min = v;
     }
-  });
+  }
   for (var j =0; j<n_fields; j++) {
-    data[j][1].sort(function(x,y) {
+    this.data[j][1].sort(function(x,y) {
       return d3.ascending(x.v, y.v);
     });
   }
@@ -419,7 +382,6 @@ var BoxPlot = function(csv_content) {
 
   this.min = min;
   this.max = max;
-  this.data = data;
 };
 
 BoxPlot.prototype = {
@@ -719,27 +681,20 @@ var BoxplotDlg = (function($){
             fields.push(obj.value);
           });
 
-      	  if (fields.length == 0)
-          {
+      	  if (fields.length == 0) {
       	    Utils.ShowMsgBox("Info", "Please select variable for box plot.")
       	    return;
       	  }
 
-  	       var map = MapManager.getInstance().GetMap();
+          var map = MapManager.getInstance().GetMap(),
+              current_map = MapManager.getInstance().GetMap(),
+              map_uuid = current_map.uuid;
   	       var newWindow = $('#chk-newtab-boxplot').is(':checked');
 
-           var params = {
-             'layer_uuid' : map.uuid,
-             'vars[]' :  fields,
-             'is_csv' : 1,
-           };
-           $.get('../../geoda/get_data', params)
-             .done(function(data){
-               var boxPlot = new BoxPlot(data);
+               var boxPlot = new BoxPlot(fields, current_map.data);
                boxPlot.print();
                boxPlot.show();
                box_plots[boxPlot.id] = boxPlot;
-             });
 
   	       $(this).dialog("close");
 	      },

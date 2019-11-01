@@ -22,12 +22,12 @@ var GDABasemap = (function($, L, cartodb){
 
     var nokia_att = 'Map &copy; 1987-2014 <a href="http://developer.here.com">HERE</a>';
 
-    var tileUrls = ['http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',
-    'http://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}',
-    'http://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}.png',
-    'http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png',
-    'http://{s}.{base}.maps.cit.api.here.com/maptile/2.1/maptile/{mapID}/hybrid.day/{z}/{x}/{y}/256/png8?app_id=DXEWcinCPybfIS9yHKbM&app_code=vPBKeXjNk_iROosIzNNNRg',
-    'http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+    var tileUrls = ['https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',
+    'https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}',
+    'https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}.png',
+    'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png',
+    'https://{s}.{base}.maps.cit.api.here.com/maptile/2.1/maptile/{mapID}/hybrid.day/{z}/{x}/{y}/256/png8?app_id=DXEWcinCPybfIS9yHKbM&app_code=vPBKeXjNk_iROosIzNNNRg',
+    'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
     ];
 
     var tileIdx = 3;
@@ -69,7 +69,6 @@ var GDABasemap = (function($, L, cartodb){
 
     // basemap buton on the right side of top bar
     $('.basemap').click(function(){
-      $('#userInfo').hide();
       $('#mapInfo').toggle();
       OnMapInfoChange();
     });

@@ -17,23 +17,8 @@ var CartoDlg = (function($, CartoProxy) {
     var viz_dict = {}; // vizname: viztitle
     var viztype_dict = {}; // vizname: viztype
     
-    function GetCartoViz() {
-      $.get("../carto_get_viz/", {}).done(function(data){
-        for (var i=0, n=data.length; i<n; i++) {
-          var row = data[i];
-          if (viz_dict[row.vizname] === undefined) {
-            $('#sel-carto-viz').append($('<option>', {value:row.vizname}).text(row.viztitle));
-          }
-          userid = row.userid;
-          viz_dict[row.vizname] = row.viztitle;
-          viztype_dict[row.vizname] = row.viztype;
-        }
-      });
-    }
-    
     $('#carto_vizjson_content').markdownEditor();
     
-    GetCartoViz();
     
     var carto_table_sel = [
       '#sel-carto-table-download', 

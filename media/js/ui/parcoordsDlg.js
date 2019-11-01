@@ -2,7 +2,7 @@
 // Author: xunli at asu.edu
 define(['jquery', './utils', './mapManager', './cartoProxy', 'd3parcoords'], function($, Utils, MapManager, CartoProxy) {
 
-var ParcoordPlot = function(csv) {
+var ParcoordPlot = function(sel_vars, data) {
   // common area
   this.id = Utils.popWindow();
   this.map = MapManager.getInstance().GetMap();
@@ -15,7 +15,16 @@ var ParcoordPlot = function(csv) {
   this.resizeTimer;
   // end of common area
 
-  this.csv = d3.csv.parse(csv);
+  // to d3.csv data type
+  this.csv = [];
+  let n = data[ sel_vars[0] ].length;
+  for (let i =0; i<n; ++i) {
+    let row = {}
+    sel_vars.forEach(function(v) {
+      row[v] = data[v][i];
+    });
+    this.csv.push(row);
+  }
   this.csv.forEach(function(d,i) { d.id = d.id || i; });
 };
 
@@ -185,21 +194,16 @@ var ParcoordsDlg = (function($){
         	    return;
         	  }
 
-        	  var map = MapManager.getInstance().GetMap();
+            var map = MapManager.getInstance().GetMap(),
+                current_map = MapManager.getInstance().GetMap(),
+                map_uuid = current_map.uuid;
         	  var newWindow = $('#chk-newtab-parcoords').is(':checked');
 
-            var params = {
-              'layer_uuid' : map.uuid,
-              'vars[]' :  fields,
-              'is_csv' : 1,
-            };
-            $.get('../../geoda/get_data', params)
-              .done(function(data){
-                var parcoordPlot = new ParcoordPlot(data);
-                parcoordPlot.print();
-                parcoordPlot.show();
-                par_plots[parcoordPlot.id] = parcoordPlot;
-              });
+            var parcoordPlot = new ParcoordPlot(fields, current_map.data);
+            parcoordPlot.print();
+            parcoordPlot.show();
+            par_plots[parcoordPlot.id] = parcoordPlot;
+
             $(this).dialog("close");
 	        },
       },

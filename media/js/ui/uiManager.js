@@ -19,7 +19,8 @@ var UIManager = (function(window, csrftoken, $, MsgBox ){
       lisaDlg, kclusterDlg, localgDlg, moranDlg,
       networkDlg, scatDlg, spacetimeDlg, spregDlg,
       weightsDlg, scatMatrixDlg, parcoordsDlg,
-      boxplotDlg, pcaDlg, kmeansDlg;
+      boxplotDlg, pcaDlg, kmeansDlg, localgearyDlg,
+      localjoincountDlg, redcapDlg, maxpDlg;
 
     var GetDialogs = function() {
       return [
@@ -39,6 +40,10 @@ var UIManager = (function(window, csrftoken, $, MsgBox ){
         localgDlg,
         pcaDlg,
         kmeansDlg,
+        localgearyDlg,
+        localjoincountDlg,
+        redcapDlg,
+        maxpDlg
       ];
     };
 
@@ -222,6 +227,10 @@ var UIManager = (function(window, csrftoken, $, MsgBox ){
         localgDlg = dlgs[15];
         pcaDlg = dlgs[16];
         kmeansDlg = dlgs[17];
+        localgearyDlg = dlgs[18];
+        localjoincountDlg = dlgs[19];
+        redcapDlg = dlgs[20];
+        maxpDlg = dlgs[21];
       },
 
       IsDialogSetup : function() {
@@ -250,7 +259,7 @@ var UIManager = (function(window, csrftoken, $, MsgBox ){
         // update table button
         if (map.uuid) {
           require(['ui/utils'], function(Utils) {
-            $('#btnShowTable').click(function() {
+            $('#btnShowTest').click(function() {
               var url = "../get_table?layer_uuid=" + map.uuid;
               var size = {
                 'width' : 400,
