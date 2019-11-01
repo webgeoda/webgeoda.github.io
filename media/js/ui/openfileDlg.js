@@ -201,7 +201,7 @@ var OpenFileDlg = (function() {
           'ui/spregDlg', 'ui/weightsDlg', 'ui/scattermatrixDlg',
           'ui/parcoordsDlg', 'ui/boxplotDlg', 'ui/kclusterDlg',
           'ui/localGDlg', 'ui/pcaDlg', 'ui/kmeansDlg',
-          'ui/localgearyDlg', 'ui/localjoincountDlg',
+          'ui/localGearyDlg', 'ui/localJoinCountDlg',
           'ui/redcapDlg', 'ui/maxpDlg'],
         function(FileDlg, CartoDlg, ChoroplethDlg,
             HistogramDlg, LisaDlg, MoranDlg,
