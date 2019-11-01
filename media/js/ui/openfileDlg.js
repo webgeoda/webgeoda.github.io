@@ -280,6 +280,14 @@ var OpenFileDlg = (function() {
       autoOpen: false,
       modal: false,
       dialogClass: "dialogWithDropShadow",
+      open: function(event, ui) {
+        var sUsrAg = navigator.userAgent,
+          usingChrome = sUsrAg.indexOf("Chrome") > -1;
+
+        if (!usingChrome) {
+          MsgBox.getInstance().Show("Oops!", "Please use Google Chrome browser to experience webGeoDa, which is built using webassembly with pthreads/multithreading for incredible performance. Thank you!");
+        }
+      },
       close : function() {
         if (bAccepts)
           $( '#btnOpenData').css("opacity", "0.2");
