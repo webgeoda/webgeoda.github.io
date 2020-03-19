@@ -17,8 +17,8 @@ define(['../utils','kdtree'], function(Utils, kdtree){
     this.prj = prj;
 
     this.n = this.json.features.length;
-    this.shpType = this.json.features[0].geometry.type.toUpperCase();
-
+    //this.shpType = this.json.features[0].geometry.type.toUpperCase();
+    this.shpTypes = [];
     this.bbox = [];
     this.centroids = [];
     this.extent = null;
@@ -105,6 +105,8 @@ define(['../utils','kdtree'], function(Utils, kdtree){
             x, y, part, projPt, ptIdx, arcIdx;
 
         var arcs, arc;
+
+        this.shpTypes.push(geom.type.toUpperCase());
 
         if (geom.type.toUpperCase() === "MULTILINESTRING" || geom.type.toUpperCase() === "MULTIPOLYGON") {
           arcs = [];
@@ -212,8 +214,9 @@ define(['../utils','kdtree'], function(Utils, kdtree){
             this.shapes.push(ptIdx);
         }
 
-        if ( this.shpType.toUpperCase() == "POLYGON" || this.shpType.toUpperCase() == "MULTIPOLYGON" ||
-             this.shpType.toUpperCase() == "LINESTRING" || this.shpType.toUpperCase() == "LINE" ) {
+        if ( geom.type.toUpperCase() == "POLYGON" || geom.type.toUpperCase() == "MULTIPOLYGON" ||
+            geom.type.toUpperCase() == "LINESTRING" || geom.type.toUpperCase() == "LINE" )
+        {
           this.bbox.push([bminX, bmaxX, bminY, bmaxY]);
           this.centroids.push([(bmaxX + bminX)/2.0, (bmaxY + bminY)/2.0]);
         } else {
@@ -222,6 +225,9 @@ define(['../utils','kdtree'], function(Utils, kdtree){
         }
       }
       this.extent = [minX, maxX, minY, maxY];
+      if (this.name == "states.geojson") {
+        this.extent = [-144.731422424316, -66.9698486328125, 24.9559669494629, 49.3717346191406];
+      }
     },
 
   };

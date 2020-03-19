@@ -292,7 +292,7 @@ var MapCanvas = function(map, canvas, hlcanvas, params) {
   this.hlcanvas.height = this.canvas.height;
 
   this.map = map;
-  this.shpType = this.map.shpType.toUpperCase();
+  this.shpType = this.map.shpTypes[0].toUpperCase();
 
   this.selected = [];
   this.brushRect = undefined;

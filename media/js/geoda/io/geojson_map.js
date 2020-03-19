@@ -6,7 +6,7 @@ define(function(){
   var JsonMap = function(geojson, LL, Lmap) {
     this.geojson = geojson;
     this.name = geojson.name;
-    this.shpType = geojson.shpType;
+    this.shpTypes = geojson.shpTypes;
 
     this.bbox = geojson.bbox;
     this.centroids = geojson.centroids;
@@ -151,34 +151,27 @@ define(function(){
 
       this.screenObjects = [];
       n = this.geojson.n;
-      if (this.shpType === "POINT") {
-        var ptIdx;
-        for (var i=0; i<n; i++) {
-          ptIdx = this.geojson.shapes[i];
-          this.screenObjects.push([xx[ptIdx], yy[ptIdx]]);
-        }
 
-      } else if (this.shpType === "LINESTRING" || this.shpType === "POLYGON" || this.shpType === "MULTIPOINT") {
-        var arcIdx, arc;
-        for (var i=0; i<n; i++) {
-          //arcIdx = this.geojson.shapes[i];
-          arc = this.geojson.shapes[i];
+      for (var i=0; i<n; i++) {
+        if (this.shpTypes[i] === "POINT") {
+          var ptIdx = this.geojson.shapes[i];
+          this.screenObjects.push([xx[ptIdx], yy[ptIdx]]);
+
+        } else if (this.shpTypes[i] === "LINESTRING" || this.shpTypes[i] === "POLYGON" || this.shpTypes[i] === "MULTIPOINT") {
+          var arc = this.geojson.shapes[i];
           var xys = [], ptIdx;
-          for (var j=0, m=arc.length; j<m; j++) {
+          for (var j = 0, m = arc.length; j < m; j++) {
             ptIdx = arc[j];
             xys.push([xx[ptIdx], yy[ptIdx]]);
           }
           this.screenObjects.push(xys);
-        }
 
-      } else if (this.shpType === "MULTILINESTRING" || this.shpType === "MULTIPOLYGON") {
-        var arcIdx, arcs, arc;
-        for (var i=0; i<n; i++) {
-          arcs = this.geojson.shapes[i];
+        } else if (this.shpTypes[i] === "MULTILINESTRING" || this.shpTypes[i] === "MULTIPOLYGON") {
+          var arcs = this.geojson.shapes[i];
           var part = [];
-          for (var j=0, m=arcs.length; j<m; j++) {
+          for (var j = 0, m = arcs.length; j < m; j++) {
             var xys = [], ptIdx;
-            for (var k=0, p=arcs[j].length; k<p; k++) {
+            for (var k = 0, p = arcs[j].length; k < p; k++) {
               ptIdx = arcs[j][k];
               xys.push([xx[ptIdx], yy[ptIdx]]);
             }
@@ -186,7 +179,6 @@ define(function(){
           }
           this.screenObjects.push(part);
         }
-
       }
     },
 
