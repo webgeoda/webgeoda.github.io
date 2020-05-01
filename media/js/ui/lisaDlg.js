@@ -98,7 +98,10 @@ var LisaDlg = (function($){
             var pval = $('#lisa-pval-sels').val();
 
             prg_bar.show();
+            var start = performance.now();
             var lisa = geoda.local_moran(map_uuid, w_uid, sel_var);
+            var duration = (performance.now() - start);
+            console.log("local moran takes ", duration);
             ProcessLisaMap(sel_var, lisa);
             prg_bar.hide();
             that.dialog("close");

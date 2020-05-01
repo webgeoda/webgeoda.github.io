@@ -30,7 +30,7 @@ var GDABasemap = (function($, L, cartodb){
     'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
     ];
 
-    var tileIdx = 3;
+    var tileIdx = 0;
     var tileProviders = {};
     tileProviders[tileUrls[0]] = cartodb_att;
     tileProviders[tileUrls[1]] = esri_att;
