@@ -22,12 +22,12 @@ var GDABasemap = (function($, L, cartodb){
 
     var nokia_att = 'Map &copy; 1987-2014 <a href="http://developer.here.com">HERE</a>';
 
-    var tileUrls = ['https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',
+    var tileUrls = ['https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}@2x.png',
     'https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}',
-    'https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}.png',
-    'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png',
+    'https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}@2x.png',
+    'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}@2x.png',
     'https://{s}.{base}.maps.cit.api.here.com/maptile/2.1/maptile/{mapID}/hybrid.day/{z}/{x}/{y}/256/png8?app_id=DXEWcinCPybfIS9yHKbM&app_code=vPBKeXjNk_iROosIzNNNRg',
-    'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+    'https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}@2x.png',
     ];
 
     var tileIdx = 0;
