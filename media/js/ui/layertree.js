@@ -19,7 +19,7 @@ var LayerTree = (function($) {
     PositionLayerTree().hide();
     
     function PlaceLayerName(name) {
-      $('#btnMultiLayer').parent().width(160);
+      $('#btnMultiLayer').parent().width(180);
       $('#btnMultiLayer').parent().css("background", "#333");
       $('#btnMultiLayer span').attr('title', name);
       $('#btnMultiLayer span').attr('title', name);
