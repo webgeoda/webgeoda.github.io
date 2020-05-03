@@ -35,7 +35,8 @@ function($, ShpReader, ShapeFileMap, GeoJson, GeoJsonMap, MapCanvas) {
           //The only thing that's now left to do is pass 
           //the address of the wasm memory we just allocated
           //to our function as well as the size of our memory.
-          window.Module.new_geojsonmap(map_uid, uint8_t_ptr, uint8_t_arr.length);
+          //window.Module.new_geojsonmap1(map_uid, uint8_t_ptr, uint8_t_arr.length);
+          window.Module.ccall("new_geojsonmap1", null, ["string", "number", "number"], [map_uid, uint8_t_ptr, uint8_t_arr.length]);
   
           //At this point we're forced to wait until wasm is done with the memory. 
           //Your site will now freeze if the memory you're working on is big. 
